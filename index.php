@@ -1,4 +1,5 @@
 <?php
+ header('Access-Control-Allow-Origin: http://ec2-54-164-182-11.compute-1.amazonaws.com');
 /**
  * Step 1: Require the Slim Framework
  *
