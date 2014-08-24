@@ -77,6 +77,11 @@ require 'Library/Slim/Slim.php';
 $app = new \Slim\Slim(array(
         'mode' => 'development'
     ));
+/* 
+ * Force th request to be XMLHttpRequest
+ */
+$app->request->isAjax();
+
 
 /*
  * Get users

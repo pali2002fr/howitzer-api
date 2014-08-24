@@ -1,0 +1,209 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Template · Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- CSS -->
+    <link href="Library/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <!-- CSS -->
+
+    <!-- Javascript -->
+    <!-- <script src="Library/js/bootstrap.js"></script> -->
+    <script src="Library/js/handlebars-v1.3.0.js"></script>
+    <script src="Library/js/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Javascript -->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+  		<div class="row-fluid">
+    		<div class="masthead">
+      		<ul class="nav nav-pills pull-right">
+        			<li class="active"><a href="#">Home</a></li>
+        			<li><a href="#">About</a></li>
+        			<li><a href="#">Contact</a></li>
+      		</ul>
+     			<h3 class="muted">Howitzer</h3>
+    		</div>
+  			<hr>
+  			<div id="shot_total_by_user" module-id="shot-total-by-user" class="span3"></div>
+    		<div class="span5">
+          <div id="shot_result" module-id="shot-result"></div>
+          <p id="shot" module-id="shot"></p>
+  		  </div>
+    		<div class="span3">
+        	<p module-id="shot-total"></p>
+        	<p module-id="user-total"></p>
+          <p module-id="shot-avg-by-user"></p>
+          <p module-id="best-shotters"></p>
+    		</div>
+      </div>
+
+      <hr>
+      <div class="footer">
+        <p>© Company 2013</p>
+      </div>
+
+    </div>
+    <!-- Handlebars Template -->
+    <script id="core" type="text/x-handlebars-template">
+      {{#if load_module_shot_total_by_user}}
+      <h4>Total shots for this user</h4>
+      <p>
+        This user shots <span class="badge badge-important">{{totalshotByUser}}</span> time(s).
+      </p>
+      {{/if}}
+
+      {{#if load_module_shot_result}}
+      <h3>You are {{ranking}}</h3>
+      <p class="target-missed">
+        <img src="http://4.bp.blogspot.com/-FMcYzUKJACs/TbFRVO74Q0I/AAAAAAAAAMU/z1W-wEuWchk/s1600/MissedTarget.jpg" />
+      </p>
+      <p style="width:100%;margin:15px 0px 0 150px;">
+        <span class="btn btn-primary"> Feel free to restart !!!</span>
+      </p>
+      {{/if}}
+
+      {{#if load_module_user}}
+      <label class="control-label" for="user">User :</label>
+      <select id="user">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      {{/if}}
+
+      {{#if load_module_howitzer_weight}}
+      <label class="control-label" for="howitzer_weight">Weight of Howitzer :</label>
+      <select id="howitzer_weight">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      {{/if}}
+
+      {{#if load_module_distance}}
+      <label class="control-label" for="distance">Distance to the target :</label>
+      <select id="distance">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      {{/if}}
+
+      {{#if load_module_target_size}}
+      <label class="control-label" for="target_size">Size of the target :</label>
+      <select id="target_size">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      {{/if}}
+
+      {{#if load_module_speed}}
+      <label class="control-label" for="speed">Muzzle Speed :</label>
+      <select id="speed" module-id="speed">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      {{/if}}
+
+      {{#if load_module_angle}}
+      <label class="control-label" for="angle">Angle of Shot :</label>
+      <select id="angle" module-id="angle">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      {{/if}}
+
+      {{#if load_module_shot_total}}
+      <h4>Total shots for all users</h4>
+      All users shot <span class="badge badge-warning">{{totalshotAllUser}}</span> time(s)
+      {{/if}}
+
+      {{#if load_module_user_total}}
+      <h4>Total Users</h4>
+      There is <span class="badge badge-success">{{totalUsers}}</span> User(s).
+      {{/if}}
+
+      {{#if load_module_shot_avg_by_user}}
+      <h4>Average number of Shoots</h4>
+      <span class="badge badge-info">{{avgShotByUser}}</span> shot(s) per user
+      {{/if}}
+
+      {{#if load_module_best_shotters}}
+      <h4>Top 5 most accurate users</h4>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Shot Counts</th>
+            <th>AVG(close to target)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{$k}}</td>
+            <td>{{name}}</td>
+            <td>{{hits}}</td>
+            <td>{{avg-closed-target}}</td>
+          </tr>
+        </tbody>
+      </table>
+      {{/if}}
+
+      {{#if load_module_shot_form}}
+      <h2 class="form-signin-heading">Ready ???</h2>
+      <!-- User -->
+      <div module-id="user"></div>
+      <!-- User -->
+
+      <!-- Howitzer -->
+      <div module-id="howitzer-weight"></div>
+      <!-- Howitzer -->
+
+      <!-- Distance -->
+      <div module-id="distance"></div>
+      <!-- Distance -->   
+
+      <!-- Size -->
+      <div module-id="target-size"></div>
+      <!-- Size -->   
+
+      <!-- Speed -->
+      <div module-id="speed"></div>
+      <!-- Speed -->  
+
+      <!-- Angle of Shot -->
+      <div module-id="angle"></div>
+      <!-- Angle of Shot -->
+      {{/if}}
+
+      {{#if load_module_shot}}
+      <p id="shot_form" module-id="shot-form"></p>
+      <span id="fire" class="btn btn-large btn-primary" >Fire</span>
+      {{/if}}
+    </script>
+    <!-- Handlebars Template -->
+  </body>
+</html>
