@@ -31,7 +31,7 @@ function App(){
 				"cache-control" : "no-cache"
 			},
 			success : function(result_data) {				
-				skin_chassis.data_obj = result_data;
+				app.data_obj = result_data;
 				handler(result_data);				
 				},
 				error : ajaxErrorHandler
