@@ -1,5 +1,7 @@
 <?php
- header('Access-Control-Allow-Origin: http://ec2-54-164-182-11.compute-1.amazonaws.com');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 /**
  * Step 1: Require the Slim Framework
  *
@@ -95,6 +97,12 @@ $app->get('/users', function() use ($userMapper, $app) {
             $users[$key]['id'] = $value->getId();
             $users[$key]['name'] = $value->getName();
         }
+
+        $app->response()->status(200);
+        $app->response()->header('Access-Control-Allow-Origin', '*'); 
+        $app->response()->header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, X-authentication, X-client');
+        $app->response()->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+
         $app->response()->header("Content-Type", "application/json");
         echo '{"user": ' . json_encode($users) . '}';
     } catch(PDOException $e) {
