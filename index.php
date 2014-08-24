@@ -71,28 +71,17 @@ require 'Library/Slim/Slim.php';
 
 \Slim\Slim::registerAutoloader();
 
-/**
- * Step 2: Instantiate a Slim application
- *
- * This example instantiates a Slim application using
- * its default settings. However, you will usually configure
- * your Slim application now by passing an associative array
- * of setting names and values into the application constructor.
+/*
+ * Creating new Slim application
  */
 $app = new \Slim\Slim(array(
         'mode' => 'development'
     ));
 
-/**
- * Step 3: Define the Slim application routes
- *
- * Here we define several Slim application routes that respond
- * to appropriate HTTP request methods. In this example, the second
- * argument for `Slim::get`, `Slim::post`, `Slim::put`, `Slim::patch`, and `Slim::delete`
- * is an anonymous function.
+/*
+ * Get users
  */
-
-$app->get('/users', function() use ($userMapper) {
+$app->get('/users', function() use ($userMapper, $app) {
     try {
         $users = array();
         $users_obj = $userMapper->findAll();
@@ -100,98 +89,99 @@ $app->get('/users', function() use ($userMapper) {
             $users[$key]['id'] = $value->getId();
             $users[$key]['name'] = $value->getName();
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"user": ' . json_encode($users) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/users/:id', function($id) use($userMapper){
+/*
+ * Get single user
+ */
+$app->get('/users/:id', function($id) use($app, $userMapper){
     try {
-
+        $app->response()->header("Content-Type", "application/json");
         $user = array();
-
         $user_obj = $userMapper->findById($id);
-
         $user['id'] = $user_obj->getId();
         $user['name'] = $user_obj->getName();
-
         echo '{"user": ' . json_encode($user) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
+/*
+ * Create new user
+ */
 $app->post('/users', function() use($app, $userMapper){
-    
-    $params = json_decode($app->request->getBody());
-
+    $params = $app->request()->post();
     try {
-
-        $user = new User($params->user);
-
+        $user = new \Model\User($params->user_id);
         $user_id = $userMapper->insert( $user );
-
         $user = $userMapper->findById($user_id);
-
+        $app->response()->header("Content-Type", "application/json");
         echo '{"user": ' . json_encode($user) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/howitzers', function() use($howitzerMapper){
+/*
+ * Get howitzers
+ */
+$app->get('/howitzers', function() use($app, $howitzerMapper){
     try {
         $howitzers = array();
         $howitzers_obj = $howitzerMapper->findAll();
-
         foreach ($howitzers_obj as $key => $value) {
             $howitzers[$key]['id'] = $value->getId();
             $howitzers[$key]['weight'] = $value->getWeight();
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"howitzer": ' . json_encode($howitzers) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/howitzers/:id', function($id) use($howitzerMapper){
+/*
+ * Get single howitzer
+ */
+$app->get('/howitzers/:id', function($id) use($app, $howitzerMapper){
     try {
         $howitzer = array();
         $howitzers_obj = $howitzerMapper->findById($id);
         $howitzer['id'] = $howitzers_obj->getId();
         $howitzer['weight'] = $howitzers_obj->getWeight();
+        $app->response()->header("Content-Type", "application/json");
         echo '{"howitzer": ' . json_encode($howitzer) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
+/*
+ * Create new howitzer
+ */
 $app->post('/howitzers', function() use($app, $howitzerMapper){
-    
-    $params = json_decode($app->request->getBody());
-
+    $params = $app->request()->post();
     try {
-
-        $howitzer = new Howitzer($params->howitzer);
-
+        $howitzer = new \Model\Howitzer($params->howitzer_weight);
         $distance_id = $howitzerMapper->insert( $howitzer );
-
         $howitzer = $howitzerMapper->findById($howitzer_id);
-
+        $app->response()->header("Content-Type", "application/json");
         echo '{"howitzer": ' . json_encode($howitzer) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/distances', function() use($distanceMapper){
+/*
+ * Get distances
+ */
+$app->get('/distances', function() use($app, $distanceMapper){
     try {
         $distances = array();
         $distances_obj = $distanceMapper->findAll();
@@ -199,46 +189,49 @@ $app->get('/distances', function() use($distanceMapper){
             $distances[$key]['id'] = $value->getId();
             $distances[$key]['distance'] = $value->getDistance();
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"distance": ' . json_encode($distances) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/distances/:id', function($id) use($distanceMapper){
+/*
+ * Get single distance
+ */
+$app->get('/distances/:id', function($id) use($app, $distanceMapper){
     try {
         $distance = array();
         $distance_obj = $distanceMapper->findById($id);
         $distance['id'] = $value->getId();
         $distance['distance'] = $value->getDistance();
+        $app->response()->header("Content-Type", "application/json");
         echo '{"distance": ' . json_encode($distance) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
+/*
+ * Create new distance
+ */
 $app->post('/distances', function() use($app, $distanceMapper){
-    
-    $params = json_decode($app->request->getBody());
-
+    $params = $app->request()->post();
     try {
-
-        $distance = new Distance($params->distance);
-
+        $distance = new \Model\Distance($params->distance_value);
         $distance_id = $distanceMapper->insert( $distance );
-
         $distance = $distanceMapper->findById($distance_id);
-
+        $app->response()->header("Content-Type", "application/json");
         echo '{"distance": ' . json_encode($distance) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/targets', function() use($targetMapper){
+/*
+ * Get targets
+ */
+$app->get('/targets', function() use($app, $targetMapper){
     try {
         $targets = array();
         $targets_obj = $targetMapper->findAll();
@@ -246,46 +239,49 @@ $app->get('/targets', function() use($targetMapper){
             $targets[$key]['id'] = $value->getId();
             $targets[$key]['size'] = $value->getSize();
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"target": ' . json_encode($targets) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/targets/:id', function($id) use($targetMapper){
+/*
+ * Get targets
+ */
+$app->get('/targets/:id', function($id) use($app, $targetMapper){
     try {
         $target = array();
         $target_obj = $targetMapper->findById($id);
         $target['id'] = $value->getId();
         $target['size'] = $value->getSize();
+        $app->response()->header("Content-Type", "application/json");
         echo '{"target": ' . json_encode($target) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
+/*
+ * Create new target
+ */
 $app->post('/targets', function() use($app, $targetMapper){
-
-    $params = json_decode($app->request->getBody());
-
+    $params = $app->request()->post();
     try {
-
-        $target = new Target($params->target);
-
+        $target = new \Model\Target($params->target_size);
         $target_id = $targetMapper->insert( $target );
-
         $target = $targetMapper->findById($target_id);
-
+        $app->response()->header("Content-Type", "application/json");
         echo '{"target": ' . json_encode($target) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/speeds', function() use($speedMapper){
+/*
+ * Get speeds
+ */
+$app->get('/speeds', function() use($app, $speedMapper){
     try {
         $speeds = array();
         $speeds_obj = $speedMapper->findAll();
@@ -293,46 +289,49 @@ $app->get('/speeds', function() use($speedMapper){
             $speeds[$key]['id'] = $value->getId();
             $speeds[$key]['speed'] = $value->getSpeed();
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"speed": ' . json_encode($speeds) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/speeds/:id', function($id) use($speedMapper){
+/*
+ * Get single speed
+ */
+$app->get('/speeds/:id', function($id) use($app, $speedMapper){
     try {
         $speed = array();
         $speed_obj = $speedMapper->findById($id);
         $speed['id'] = $value->getId();
         $speed['speed'] = $value->getSpeed();
+        $app->response()->header("Content-Type", "application/json");
         echo '{"speed": ' . json_encode($speed) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
+/*
+ * Create new speed
+ */
 $app->post('/speed', function() use($app, $speedMapper){
-
-    $params = json_decode($app->request->getBody());
-
+    $params = $app->request()->post();
     try {
-
-        $speed = new Speed($params->speed);
-
+        $speed = new \Model\Speed($params->speed_value);
         $speed_id = $speedMapper->insert( $speed );
-
         $speed = $speedMapper->findById($speed_id);
-
+        $app->response()->header("Content-Type", "application/json");
         echo '{"speed": ' . json_encode($speed) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/angles', function() use($angleMapper){
+/*
+ * Get angles
+ */
+$app->get('/angles', function() use($app, $angleMapper){
     try {
         $angles = array();
         $angles_obj = $angleMapper->findAll();
@@ -340,19 +339,23 @@ $app->get('/angles', function() use($angleMapper){
             $angles[$key]['id'] = $value->getId();
             $angles[$key]['angle'] = $value->getAngle();
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"angle": ' . json_encode($angles) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/angles/:id', function($id) use($angleMapper){
+/*
+ * Get single angle
+ */
+$app->get('/angles/:id', function($id) use($app, $angleMapper){
     try {
         $angle = array();
         $angle_obj = $angleMapper->findById($id);
         $angle['id'] = $value->getId();
         $angle['angle'] = $value->getAngle();
+        $app->response()->header("Content-Type", "application/json");
         echo '{"angle": ' . json_encode($angle) . '}';
 
     } catch(PDOException $e) {
@@ -360,30 +363,29 @@ $app->get('/angles/:id', function($id) use($angleMapper){
     }
 });
 
+/*
+ * Create new angle
+ */
 $app->post('/angles', function() use($app, $angleMapper){
-
-    $params = json_decode($app->request->getBody());
-
+    $params = $app->request()->post();
     try {
-
-        $angle = new Angle($params->angle);
-
+        $angle = new \Model\Angle($params->angle_value);
         $angle_id = $angleMapper->insert( $angle );
-
         $angle = $angleMapper->findById($angle_id);
-
+        $app->response()->header("Content-Type", "application/json");
         echo '{"angle": ' . json_encode($angle) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/shots', function() use($shotMapper){
+/*
+ * Get shots
+ */
+$app->get('/shots', function() use($app, $shotMapper){
     try {
         $shots = array();
         $shots_obj = $shotMapper->findAll();
-
         foreach ($shots_obj as $key => $value) {
             $shots[$key]['id'] = $value->getId();
             $shots[$key]['user']['id'] = $value->getUser()->getId();
@@ -399,18 +401,20 @@ $app->get('/shots', function() use($shotMapper){
             $shots[$key]['angle']['id'] = $value->getAngle()->getId();
             $shots[$key]['angle']['angle'] = $value->getAngle()->getAngle();
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"shot": ' . json_encode($shots) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/shots/:id', function($id) use($shotMapper){
+/*
+ * Get single shot
+ */
+$app->get('/shots/:id', function($id) use($app, $shotMapper){
     try {
         $shot = array();
         $shot_obj = $shotMapper->findById($id);
-
         $shot['id'] = $shot_obj->getId();
         $shot['user']['id'] = $shot_obj->getUser()->getId();
         $shot['user']['name'] = $shot_obj->getUser()->getName();
@@ -424,17 +428,18 @@ $app->get('/shots/:id', function($id) use($shotMapper){
         $shot['speed']['speed'] = $shot_obj->getSpeed()->getSpeed();
         $shot['angle']['id'] = $shot_obj->getAngle()->getId();
         $shot['angle']['angle'] = $shot_obj->getAngle()->getAngle();
+        $app->response()->header("Content-Type", "application/json");
         echo '{"shot": ' . json_encode($shot) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
+/*
+ * Create new shot
+ */
 $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetMapper, $distanceMapper, $speedMapper, $angleMapper, $shotMapper){
-    
-    $params = json_decode($app->request()->getBody());
-
+    $params = $app->request()->post();
     try {
         $user = $userMapper->findById($params->user_id);
         $howitzer = $howitzerMapper->findById($params->howitzer_id);
@@ -442,7 +447,6 @@ $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetM
         $distance = $distanceMapper->findById($params->distance_id);
         $speed = $speedMapper->findById($params->speed_id);
         $angle = $angleMapper->findById($params->angle_id);
-
         $shot_id = $shotMapper->insert( 
                                     $user, 
                                     $howitzer, 
@@ -451,21 +455,21 @@ $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetM
                                     $speed, 
                                     $angle
                 );
-
         $shot = $shotMapper->findById($shot_id);
-
+        $app->response()->header("Content-Type", "application/json");
         echo '{"shot": ' . json_encode($shot) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/results', function() use($resultMapper){
+/*
+ * Get results
+ */
+$app->get('/results', function() use($app, $resultMapper){
     try {
         $results = array();
         $results_obj = $resultMapper->findAll();
- 
         foreach ($results_obj as $key => $value) {
             $results[$key]['id'] = $value->getId();
             $results[$key]['user']['id'] = $value->getUser()->getId();
@@ -483,14 +487,17 @@ $app->get('/results', function() use($resultMapper){
             $results[$key]['hit'] = $value->getHit();
             $results[$key]['impact'] =  $value->getImpact();
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"result": ' . json_encode($results) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/results/:id', function($id) use($resultMapper){
+/*
+ * Get result
+ */
+$app->get('/results/:id', function($id) use($app, $resultMapper){
     try {
         $result = array();
         $result_obj = $resultMapper->findById($id);
@@ -509,107 +516,125 @@ $app->get('/results/:id', function($id) use($resultMapper){
         $result['shot']['angle']['angle'] = $result_obj->getShot()->getAngle()->getAngle();
         $result['hit'] = $result_obj->getHit();
         $result['impact'] =  $result_obj->getImpact();
+        $app->response()->header("Content-Type", "application/json");
         echo '{"result": ' . json_encode($result) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
+/*
+ * Create new result
+ */
 $app->post('/results', function() use($app, $userMapper, $shotMapper, $resultMapper){
-
-    $params = json_decode($app->request()->getBody());
-
+    $params = $app->request()->post();
     try {
         $user = $userMapper->findById($params->user_id);
         $shot = $shotMapper->findById($params->shot_id);
         $hit = $params->hit;
         $impact = $params->impact;
-
         $result_id = $resultMapper->insert($shot, $user, $hit, $impact);
-
         $result = $resultMapper->findById($result_id);
-
+        $app->response()->header("Content-Type", "application/json");
         echo '{"result": ' . json_encode($result) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/top/:limit', function($limit) use($resultMapper){
+/*
+ * Get top best shotters
+ */
+$app->get('/top/:limit', function($limit) use($app, $resultMapper){
     try {
         $top = $resultMapper->getTopAcurateUsersByLimit($limit);
+        $app->response()->header("Content-Type", "application/json");
         echo '{"top": ' . json_encode($top) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/shots-total', function() use($shotMapper){
+/*
+ * Get total shots
+ */
+$app->get('/shots-total', function() use($app, $shotMapper){
     try {
         $total = count($shotMapper->findAll());
+        $app->response()->header("Content-Type", "application/json");
         echo '{"total": ' . json_encode($total) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/users-total', function() use($userMapper){
+/*
+ * Get total users
+ */
+$app->get('/users-total', function() use($app, $userMapper){
     try {
         $total = count($userMapper->findAll());
+        $app->response()->header("Content-Type", "application/json");
         echo '{"total": ' . json_encode($total) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/shots-avg', function() use($shotMapper, $userMapper){
+/*
+ * Get average shot by user
+ */
+$app->get('/shots-avg', function() use($app, $shotMapper, $userMapper){
     try {
         $avg = count($shotMapper->findAll())/count($userMapper->findAll());
+        $app->response()->header("Content-Type", "application/json");
         echo '{"avg": ' . json_encode($avg) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/ranking', function() use($resultMapper){
+/*
+ * Get ranking by user
+ */
+$app->get('/ranking', function() use($app, $resultMapper){
     try {
         $ranking = array();
         $ranking_arr = $resultMapper->getRankingAllUsers();
-
         foreach ($ranking_arr as $key => $value) {
             $ranking[$key]['user']['id'] = $value['user']->getId();
             $ranking[$key]['user']['name'] = $value['user']->getName();
             $ranking[$key]['hits'] = $value['hits'];
         }
+        $app->response()->header("Content-Type", "application/json");
         echo '{"ranking": ' . json_encode($ranking) . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/shots-total-by-user/:id', function($id) use($shotService){
+/*
+ * Get total shots by user
+ */
+$app->get('/shots-total-by-user/:id', function($id) use($app, $shotService){
     try {     
         $total = $shotService->getTotalShotByUser($id);
+        $app->response()->header("Content-Type", "application/json");
         echo '{"total": ' . $total . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 });
 
-$app->get('/calculate-trajectoire/:id', function() use($shotMapper, $shotMapper){
+/*
+ * Get calculate impact on target
+ */
+$app->get('/calculate-trajectoire/:id', function() use($app, $shotMapper, $shotMapper){
     try {
         $shot = $shotMapper->findById($id);
         $impact = $shotService->calculateTrajectoire($shot);
+        $app->response()->header("Content-Type", "application/json");
         echo '{"impact": ' . $impact . '}';
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -715,4 +740,7 @@ EOT;
     }
 );
 
+/*
+* Runing the Slim app
+*/
 $app->run();
