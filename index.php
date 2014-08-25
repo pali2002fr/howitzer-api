@@ -444,7 +444,7 @@ $app->get('/shots/:id', function($id) use($app, $shotMapper){
  * Create new shot
  */
 $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetMapper, $distanceMapper, $speedMapper, $angleMapper, $shotMapper){
-    $params = $app->request()->post();
+    $params = json_decode($app->request()->getBody());
     try {
         $user = $userMapper->findById($params->user_id);
         $howitzer = $howitzerMapper->findById($params->howitzer_id);
@@ -532,7 +532,7 @@ $app->get('/results/:id', function($id) use($app, $resultMapper){
  * Create new result
  */
 $app->post('/results', function() use($app, $userMapper, $shotMapper, $resultMapper){
-    $params = $app->request()->post();
+    $params = json_decode($app->request()->getBody());
     try {
         $user = $userMapper->findById($params->user_id);
         $shot = $shotMapper->findById($params->shot_id);

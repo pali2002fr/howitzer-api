@@ -33,18 +33,18 @@ function App(){
 	    }
 		
 		return $.ajax({
-			url : href,
-			type : type,
-			dataType : 'json',
-			data : params,
-			headers : {
-				"cache-control" : "no-cache"
-			},
-			success : function(result_data) {				
-				app.data_obj = result_data;
-				handler(result_data);				
-				},
-				error : ajaxErrorHandler
+						url : href,
+						type : type,
+						dataType : 'json',
+						data : params,
+						headers : 	{
+										"cache-control" : "no-cache"
+									},
+						success : 	function(result_data) {				
+										app.data_obj = result_data;
+										handler(result_data);				
+									},
+						error : 	ajaxErrorHandler
 			});
 
 	}
@@ -93,6 +93,7 @@ function App(){
 		var request_method = "GET";
 		// Callback function
 		function handler(result_obj) {
+			add_result(result_obj.user.id, result_obj.shot.id, result_obj.hit, result_obj.impact);
 			var data_obj = {};
 			if(result_obj.impact == 0){
 				data_obj.success = 1;
@@ -169,6 +170,23 @@ function App(){
 				load_module_best_shotters : '1',
 				data_obj: result_obj
 			}));
+		}
+		return ajax(href, params, request_method, handler);
+	}
+
+	function add_result(user_id, shot_id, hit, impact){
+
+		var href = apiUrl + "/results";
+		var params = {
+						'user_id': user_id,
+						'shot_id': shot_id,
+						'hit': hit,
+						'impact': impact
+					};
+		var request_method = "POST";
+		// Callback function
+		function handler(result_obj) {
+			console.log(result_obj);
 		}
 		return ajax(href, params, request_method, handler);
 	}
@@ -330,7 +348,7 @@ function App(){
 		var speed_id = $('#speed').val();
 		var angle_id = $('#angle').val();
 		add_shot(user_id, howitzer_id, target_id, distance_id, speed_id, angle_id);
-		$('module-id="shot"').html('');
+		$('[module-id="shot"]').html('');
 	});	
 }
 
