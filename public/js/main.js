@@ -163,15 +163,12 @@ function App(){
 		var request_method = "GET";
 		// Callback function
 		function handler(result_obj) {
-			/*
 			var source = $("#core").html();  
 			var template = Handlebars.compile(source);
 			$('[module-id="best-shotters"]').html(template({
 				load_module_best_shotters : '1',
 				data_obj: result_obj
 			}));
-			*/
-			load_module_shot_result(result_obj.id);
 		}
 		return ajax(href, params, request_method, handler);
 	}
@@ -190,12 +187,15 @@ function App(){
 		var request_method = "POST";
 		// Callback function
 		function handler(result_obj) {
+			/*
 			var source = $("#core").html();  
 			var template = Handlebars.compile(source);
 			$('[module-id="shot"]').html(template({
 				load_module_shot : '1',
 				data_obj: result_obj
 			}));
+			*/
+			load_module_shot_result(result_obj.id);
 		}
 		return ajax(href, params, request_method, handler);
 	}
