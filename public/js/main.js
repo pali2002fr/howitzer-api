@@ -16,11 +16,13 @@ function App(){
 	function ajax(href, params, type, handler) {
 		
 		// IE caching preventer
+		/*
     	if(params == null){
     		params = {'__':(new Date()).getTime() };
     	}else{
     		params['__'] = (new Date()).getTime();
     	}    	
+    	*/
 		
 		return $.ajax({
 			url : href,
