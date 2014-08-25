@@ -171,7 +171,7 @@ function App(){
 				data_obj: result_obj
 			}));
 			*/
-			load_module_shot_result(result_obj->id);
+			load_module_shot_result(result_obj.id);
 		}
 		return ajax(href, params, request_method, handler);
 	}
