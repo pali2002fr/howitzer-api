@@ -12,6 +12,8 @@ function App(){
 	this.ajax = ajax;
 	this.ajaxErrorHandler = ajaxErrorHandler;
 
+	var apiUrl = "http://ec2-54-164-182-11.compute-1.amazonaws.com";
+
 	/* Asynchronous */
 	function ajax(href, params, type, handler) {
 		
@@ -24,7 +26,7 @@ function App(){
     	}    	
     	*/
 
-    	if(params != null){
+    	if(params != null && type == 'GET'){
 	    	$.each(params, function( key, value ) {
 			  href = href +  "/" + value;
 			});
@@ -64,8 +66,13 @@ function App(){
 		load_module_shot_form();
 	}
 
+	/******************************
+	 * 		General Methods
+	 ******************************/
+
+
 	function load_module_shot_total_by_user(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/users-total";
+		var href = apiUrl + "/users-total";
 		var params = "";
 		var request_method = "GET";
 		// Callback function
@@ -81,7 +88,7 @@ function App(){
 	}	
 
 	function load_module_shot_result(shot_id){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/calculate-trajectoire";
+		var href = apiUrl + "/calculate-trajectoire";
 		var params = {'id': shot_id};
 		var request_method = "GET";
 		// Callback function
@@ -103,7 +110,7 @@ function App(){
 	}	
 
 	function load_module_shot_total(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shots-total";
+		var href = apiUrl + "/shots-total";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -119,7 +126,7 @@ function App(){
 	}	
 
 	function load_module_user_total(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/users-total";
+		var href = apiUrl + "/users-total";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -135,7 +142,7 @@ function App(){
 	}
 
 	function load_module_shot_avg_by_user(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shots-avg";
+		var href = apiUrl + "/shots-avg";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -151,24 +158,27 @@ function App(){
 	}
 
 	function load_module_best_shotters(limit){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/top";
+		var href = apiUrl + "/top";
 		var params = {'limit': limit};
 		var request_method = "GET";
 		// Callback function
 		function handler(result_obj) {
+			/*
 			var source = $("#core").html();  
 			var template = Handlebars.compile(source);
 			$('[module-id="best-shotters"]').html(template({
 				load_module_best_shotters : '1',
 				data_obj: result_obj
 			}));
+			*/
+			load_module_shot_result(result_obj->id);
 		}
 		return ajax(href, params, request_method, handler);
 	}
 
 	function add_shot(user_id, howitzer_id, target_id, distance_id, speed_id, angle_id){
 
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shots";
+		var href = apiUrl + "/shots";
 		var params = {
 						'user_id': user_id,
 						'howitzer_id': howitzer_id,
@@ -213,7 +223,7 @@ function App(){
 	}
 
 	function load_module_user(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/users";
+		var href = apiUrl + "/users";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -229,7 +239,7 @@ function App(){
 	}
 
 	function load_module_howitzer(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/howitzers";
+		var href = apiUrl + "/howitzers";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -245,7 +255,7 @@ function App(){
 	}
 
 	function load_module_distance(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/distances";
+		var href = apiUrl + "/distances";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -261,7 +271,7 @@ function App(){
 	}
 
 	function load_module_target(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/targets";
+		var href = apiUrl + "/targets";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -277,7 +287,7 @@ function App(){
 	}
 
 	function load_module_speed(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/speeds";
+		var href = apiUrl + "/speeds";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -293,7 +303,7 @@ function App(){
 	}
 
 	function load_module_angle(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/angles";
+		var href = apiUrl + "/angles";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -307,5 +317,20 @@ function App(){
 		}
 		return ajax(href, params, request_method, handler);
 	}
+
+	/******************************
+	 * 		Event Handlers
+	 ******************************/
+
+	$(document).on('click', '#fire', function(event) {
+		var user_id = $('#user').val();
+		var howitzer_id = $('#howitzer').val();
+		var target_id = $('#target').val();
+		var distance_id = $('#distance').val();
+		var speed_id = $('#speed').val();
+		var angle_id = $('#angle').val();
+		add_shot(user_id, howitzer_id, target_id, distance_id, speed_id, angle_id);
+		$('module-id="shot"').html('');
+	});	
 }
 
