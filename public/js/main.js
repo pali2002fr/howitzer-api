@@ -23,6 +23,12 @@ function App(){
     		params['__'] = (new Date()).getTime();
     	}    	
     	*/
+
+    	if(params != null){
+	    	$.each(params, function( key, value ) {
+			  href = href +  "/" + value;
+			});
+	    }
 		
 		return $.ajax({
 			url : href,
@@ -49,12 +55,12 @@ function App(){
 
 	function loadPage(){
 		load_module_shot_total_by_user();
-		load_module_shot_result();
+		//load_module_shot_result();
 		load_module_shot_total();
 		load_module_user_total();
 		load_module_shot_avg_by_user();
-		load_module_best_shotters();
-		load_module_shot();
+		load_module_best_shotters(4);
+		//load_module_shot();
 		load_module_shot_form();
 	}
 
@@ -97,7 +103,7 @@ function App(){
 	}	
 
 	function load_module_shot_total(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shot-total";
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shots-total";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -113,7 +119,7 @@ function App(){
 	}	
 
 	function load_module_user_total(){
-		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/user-total";
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/users-total";
 		var params = {};
 		var request_method = "GET";
 		// Callback function
@@ -146,7 +152,7 @@ function App(){
 
 	function load_module_best_shotters(limit){
 		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/top";
-		var params = {'limit': 5};
+		var params = {'limit': limit};
 		var request_method = "GET";
 		// Callback function
 		function handler(result_obj) {
