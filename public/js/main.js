@@ -59,8 +59,8 @@ function App(){
 		load_module_shot_total();
 		load_module_user_total();
 		load_module_shot_avg_by_user();
-		load_module_best_shotters(4);
-		//load_module_shot();
+		load_module_best_shotters(5);
+		load_module_shot();
 		load_module_shot_form();
 	}
 
@@ -166,7 +166,7 @@ function App(){
 		return ajax(href, params, request_method, handler);
 	}
 
-	function load_module_shot(user_id, howitzer_id, target_id, distance_id, speed_id, angle_id){
+	function add_shot(user_id, howitzer_id, target_id, distance_id, speed_id, angle_id){
 
 		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shots";
 		var params = {
@@ -188,6 +188,14 @@ function App(){
 			}));
 		}
 		return ajax(href, params, request_method, handler);
+	}
+
+	function load_module_shot(){
+		var source = $("#core").html();  
+		var template = Handlebars.compile(source);
+		$('[module-id="shot"]').html(template({
+			load_module_shot : '1'
+		}));
 	}
 
 	function load_module_shot_form(){
