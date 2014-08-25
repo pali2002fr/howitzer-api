@@ -83,9 +83,9 @@
       </select>
       {{/if}}
 
-      {{#if load_module_howitzer_weight}}
-      <label class="control-label" for="weight">Weight of Howitzer :</label>
-      <select id="weight">
+      {{#if load_module_howitzer}}
+      <label class="control-label" for="howitzer">Weight of Howitzer :</label>
+      <select id="howitzer">
         {{#each data_obj.howitzer}}
         <option value="{{id}}">{{weight}}</option>
         {{/each}}
@@ -101,7 +101,7 @@
       </select>
       {{/if}}
 
-      {{#if load_module_target_size}}
+      {{#if load_module_target}}
       <label class="control-label" for="target">Size of the target :</label>
       <select id="target">
         {{#each data_obj.target}}
@@ -175,7 +175,7 @@
       <!-- User -->
 
       <!-- Howitzer -->
-      <div module-id="howitzer-weight"></div>
+      <div module-id="howitzer"></div>
       <!-- Howitzer -->
 
       <!-- Distance -->
@@ -183,7 +183,7 @@
       <!-- Distance -->   
 
       <!-- Size -->
-      <div module-id="target-size"></div>
+      <div module-id="target"></div>
       <!-- Size -->   
 
       <!-- Speed -->

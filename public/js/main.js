@@ -220,7 +220,7 @@ function App(){
 		function handler(result_obj) {
 			var source = $("#core").html();  
 			var template = Handlebars.compile(source);
-			$('[module-id="howitzer-weight"]').html(template({
+			$('[module-id="howitzer"]').html(template({
 				load_module_howitzer : '1',
 				data_obj: result_obj
 			}));
@@ -252,7 +252,7 @@ function App(){
 		function handler(result_obj) {
 			var source = $("#core").html();  
 			var template = Handlebars.compile(source);
-			$('[module-id="target-size"]').html(template({
+			$('[module-id="target"]').html(template({
 				load_module_target : '1',
 				data_obj: result_obj
 			}));
