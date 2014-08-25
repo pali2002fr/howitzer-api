@@ -552,9 +552,16 @@ $app->post('/results', function() use($app, $userMapper, $shotMapper, $resultMap
  */
 $app->get('/top/:limit', function($limit) use($app, $resultMapper){
     try {
-        $top = $resultMapper->getTopAcurateUsersByLimit($limit);
+        $top = array();
+        $top_arr = $resultMapper->getTopAcurateUsersByLimit($limit);
+        foreach ($top_arr as $key => $value) {
+            $top[$key]['user']['id'] = $value['user']->getId();
+            $top[$key]['user']['name'] = $value['user']->getName();
+            $top[$key]['hits'] = $value['hits'];
+            $top[$key]['avg-closed-target'] = $value['avg-closed-target'];
+        }
         $app->response()->header("Content-Type", "application/json");
-        echo '{"top": ' . json_encode($top) . '}';
+        echo '{"top": ' . json_encode($top) . ',"limit": ' . $limit . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -634,7 +641,7 @@ $app->get('/shots-total-by-user/:id', function($id) use($app, $shotService){
 /*
  * Get calculate impact on target
  */
-$app->get('/calculate-trajectoire/:id', function() use($app, $shotMapper, $shotMapper){
+$app->get('/calculate-trajectoire/:id', function($id) use($app, $shotMapper, $shotMapper){
     try {
         $shot = $shotMapper->findById($id);
         $impact = $shotService->calculateTrajectoire($shot);

@@ -55,15 +55,20 @@
       {{#if load_module_shot_total_by_user}}
       <h4>Total shots for this user</h4>
       <p>
-        This user shots <span class="badge badge-important">{{totalshotByUser}}</span> time(s).
+        This user shots <span class="badge badge-important">{{data_obj.total}}</span> time(s).
       </p>
       {{/if}}
 
       {{#if load_module_shot_result}}
-      <h3>You are {{ranking}}</h3>
+      
+      {{#if data_obj.fail}}
       <p class="target-missed">
         <img src="http://4.bp.blogspot.com/-FMcYzUKJACs/TbFRVO74Q0I/AAAAAAAAAMU/z1W-wEuWchk/s1600/MissedTarget.jpg" />
       </p>
+      {{/if}}
+      {{#if data_obj.success}}
+      <h3>You are {{data_obj.ranking}}</h3>
+      {{/if}}
       <p style="width:100%;margin:15px 0px 0 150px;">
         <span class="btn btn-primary"> Feel free to restart !!!</span>
       </p>
@@ -72,86 +77,75 @@
       {{#if load_module_user}}
       <label class="control-label" for="user">User :</label>
       <select id="user">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+        {{#each data_obj.user}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
       </select>
       {{/if}}
 
       {{#if load_module_howitzer_weight}}
-      <label class="control-label" for="howitzer_weight">Weight of Howitzer :</label>
-      <select id="howitzer_weight">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+      <label class="control-label" for="weight">Weight of Howitzer :</label>
+      <select id="weight">
+        {{#each data_obj.howitzer}}
+        <option value="{{id}}">{{weight}}</option>
+        {{/each}}
       </select>
       {{/if}}
 
       {{#if load_module_distance}}
       <label class="control-label" for="distance">Distance to the target :</label>
       <select id="distance">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+        {{#each data_obj.distance}}
+        <option value="{{id}}">{{distance}}</option>
+        {{/each}}
       </select>
       {{/if}}
 
       {{#if load_module_target_size}}
-      <label class="control-label" for="target_size">Size of the target :</label>
-      <select id="target_size">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+      <label class="control-label" for="target">Size of the target :</label>
+      <select id="target">
+        {{#each data_obj.target}}
+        <option value="{{id}}">{{size}}</option>
+        {{/each}}
       </select>
       {{/if}}
 
       {{#if load_module_speed}}
       <label class="control-label" for="speed">Muzzle Speed :</label>
       <select id="speed" module-id="speed">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+        {{#each data_obj.speed}}
+        <option value="{{id}}">{{speed}}</option>
+        {{/each}}
       </select>
       {{/if}}
 
       {{#if load_module_angle}}
       <label class="control-label" for="angle">Angle of Shot :</label>
       <select id="angle" module-id="angle">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
+        {{#each data_obj.angle}}
+        <option value="{{id}}">{{angle}}</option>
+        {{/each}}
         <option>5</option>
       </select>
       {{/if}}
 
       {{#if load_module_shot_total}}
       <h4>Total shots for all users</h4>
-      All users shot <span class="badge badge-warning">{{totalshotAllUser}}</span> time(s)
+      All users shot <span class="badge badge-warning">{{data_obj.total}}</span> time(s)
       {{/if}}
 
       {{#if load_module_user_total}}
       <h4>Total Users</h4>
-      There is <span class="badge badge-success">{{totalUsers}}</span> User(s).
+      There is <span class="badge badge-success">{{data_obj.total}}</span> User(s).
       {{/if}}
 
       {{#if load_module_shot_avg_by_user}}
       <h4>Average number of Shoots</h4>
-      <span class="badge badge-info">{{avgShotByUser}}</span> shot(s) per user
+      <span class="badge badge-info">{{data_obj.avg}}</span> shot(s) per user
       {{/if}}
 
       {{#if load_module_best_shotters}}
-      <h4>Top 5 most accurate users</h4>
+      <h4>Top {{data_obj.limit}} most accurate users</h4>
       <table class="table table-condensed">
         <thead>
           <tr>
@@ -162,12 +156,14 @@
           </tr>
         </thead>
         <tbody>
+          {{#each data_obj.top}}
           <tr>
-            <td>{{$k}}</td>
-            <td>{{name}}</td>
+            <td>{{@index}}</td>
+            <td>{{user.name}}</td>
             <td>{{hits}}</td>
             <td>{{avg-closed-target}}</td>
           </tr>
+          {{/each}}
         </tbody>
       </table>
       {{/if}}

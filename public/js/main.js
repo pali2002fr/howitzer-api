@@ -61,62 +61,125 @@ function App(){
 		var params = "";
 		var request_method = "GET";
 		// Callback function
-		function handler(result_data) {
+		function handler(result_obj) {
 			var source = $("#core").html();  
 			var template = Handlebars.compile(source);
 			$('[module-id="shot-total-by-user"]').html(template({
-				load_module_shot_total_by_user : '1'
+				load_module_shot_total_by_user : '1',
+				data_obj : result_obj
 			}));
 		}
 		return ajax(href, params, request_method, handler);
 	}	
 
-	function load_module_shot_result(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="shot-result"]').html(template({
-			load_module_shot_result : '1'
-		}));
+	function load_module_shot_result(shot_id){
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/calculate-trajectoire";
+		var params = {'id': shot_id};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var data_obj = {};
+			if(result_obj.impact == 0}{
+				data_obj.success = 1;
+			} else {
+				data_obj.fail = 1;
+			}
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="shot-result"]').html(template({
+				load_module_shot_result : '1',
+				data_obj : data_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}	
 
 	function load_module_shot_total(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="shot-total"]').html(template({
-			load_module_shot_total : '1'
-		}));
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shot-total";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="shot-total"]').html(template({
+				load_module_shot_total : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}	
 
 	function load_module_user_total(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="user-total"]').html(template({
-			load_module_user_total : '1'
-		}));
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/user-total";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="user-total"]').html(template({
+				load_module_user_total : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
 	function load_module_shot_avg_by_user(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="shot-avg-by-user"]').html(template({
-			load_module_shot_avg_by_user : '1'
-		}));
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shots-avg";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="shot-avg-by-user"]').html(template({
+				load_module_shot_avg_by_user : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
-	function load_module_best_shotters(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="best-shotters"]').html(template({
-			load_module_best_shotters : '1'
-		}));
+	function load_module_best_shotters(limit){
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/top";
+		var params = {'limit': 5};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="best-shotters"]').html(template({
+				load_module_best_shotters : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
-	function load_module_shot(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="shot"]').html(template({
-			load_module_shot : '1'
-		}));
+	function load_module_shot(user_id, howitzer_id, target_id, distance_id, speed_id, angle_id){
+
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/shots";
+		var params = {
+						'user_id': user_id,
+						'howitzer_id': howitzer_id,
+						'target_id': target_id,
+						'distance_id': distance_id,
+						'speed_id': speed_id,
+						'angle_id': angle_id
+			};
+		var request_method = "POST";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="shot"]').html(template({
+				load_module_shot : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
 	function load_module_shot_form(){
@@ -126,59 +189,107 @@ function App(){
 			load_module_shot_form : '1'
 		}));
 		load_module_user();
-		load_module_howitzer_weight();
+		load_module_howitzer();
 		load_module_distance();
-		load_module_target_size();
+		load_module_target();
 		load_module_speed();
 		load_module_angle();
 	}
 
 	function load_module_user(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="user"]').html(template({
-			load_module_user : '1'
-		}));
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/users";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="user"]').html(template({
+				load_module_user : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
-	function load_module_howitzer_weight(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="howitzer-weight"]').html(template({
-			load_module_howitzer_weight : '1'
-		}));
+	function load_module_howitzer(){
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/howitzers";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="howitzer-weight"]').html(template({
+				load_module_howitzer : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
 	function load_module_distance(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="distance"]').html(template({
-			load_module_distance : '1'
-		}));
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/distances";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="distance"]').html(template({
+				load_module_distance : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
-	function load_module_target_size(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="target-size"]').html(template({
-			load_module_target_size : '1'
-		}));
+	function load_module_target(){
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/targets";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="target-size"]').html(template({
+				load_module_target : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
 	function load_module_speed(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="speed"]').html(template({
-			load_module_speed : '1'
-		}));
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/speeds";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="speed"]').html(template({
+				load_module_speed : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 
 	function load_module_angle(){
-		var source = $("#core").html();  
-		var template = Handlebars.compile(source);
-		$('[module-id="angle"]').html(template({
-			load_module_angle : '1'
-		}));
+		var href = "http://ec2-54-164-182-11.compute-1.amazonaws.com/angles";
+		var params = {};
+		var request_method = "GET";
+		// Callback function
+		function handler(result_obj) {
+			var source = $("#core").html();  
+			var template = Handlebars.compile(source);
+			$('[module-id="angle"]').html(template({
+				load_module_angle : '1',
+				data_obj: result_obj
+			}));
+		}
+		return ajax(href, params, request_method, handler);
 	}
 }
 

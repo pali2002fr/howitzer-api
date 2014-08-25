@@ -41,7 +41,7 @@ class ResultMapper extends AbstractDataMapper implements ResultMapperInterface {
 	}
 	
 	public function getTopAcurateUsersByLimit($number){
-		$sql = "SELECT id_user, sum(hit) as 'hits', AVG(impact) as 'avg-closed-target'
+		$sql = "SELECT id_user, sum(hit) as 'hits', AVG(impact) as 'avg'
 								FROM result
 								GROUP BY  id_user
 								ORDER BY hits DESC
@@ -54,7 +54,7 @@ class ResultMapper extends AbstractDataMapper implements ResultMapperInterface {
 			$return[] = array(
 								'user' => $user,
 								'hits' => $row['hits'],
-								'avg-closed-target' => $row['avg-closed-target']
+								'avg-closed-target' => $row['avg']
 						);
 		}
 		return $return;
