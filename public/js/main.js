@@ -79,7 +79,7 @@ function App(){
 		// Callback function
 		function handler(result_obj) {
 			var data_obj = {};
-			if(result_obj.impact == 0}{
+			if(result_obj.impact == 0){
 				data_obj.success = 1;
 			} else {
 				data_obj.fail = 1;
