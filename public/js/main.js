@@ -30,6 +30,7 @@ function App(){
 	    	$.each(params, function( key, value ) {
 			  href = href +  "/" + value;
 			});
+			params = '';
 	    }
 		
 		return $.ajax({
