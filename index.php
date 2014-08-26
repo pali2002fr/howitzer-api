@@ -461,8 +461,9 @@ $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetM
                                     $speed, 
                                     $angle
                 );
-        error_log($shot_id, 0);
+        
         $shot = $shotMapper->findById($shot_id);
+        error_log($shot->getId(), 0);
         $app->response()->header("Content-Type", "application/json");
         echo '{"shot": ' . json_encode($shot) . '}';
     } catch(PDOException $e) {
