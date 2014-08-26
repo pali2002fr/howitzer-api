@@ -642,10 +642,15 @@ $app->get('/shots-total-by-user/:id', function($id) use($app, $shotService){
  */
 $app->get('/calculate-trajectoire/:id', function($id) use($app, $shotMapper, $shotService){
     try {
+        $_toJson = array();
         $shot = $shotMapper->findById($id);
         $impact = $shotService->calculateTrajectoire($shot);
         $app->response()->header("Content-Type", "application/json");
-        echo '{"impact": ' . $impact . '}';
+        $_toJson['impact'] = $impact;
+        $_toJson['user_id'] = $shot->getUser()->getId();
+        $_toJson['shot_id'] = $shot->getId();
+        $_toJson['hit'] = $impact == 0 ? 1 : 0;
+        echo json_encode($_toJson);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }

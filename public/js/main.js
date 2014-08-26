@@ -98,7 +98,8 @@ function App(){
 		var request_method = "GET";
 		// Callback function
 		function handler(result_obj) {
-			add_result(result_obj.user.id, result_obj.shot.id, result_obj.hit, result_obj.impact);
+			console.log(result_obj);
+			add_result(result_obj.user_id, result_obj.shot_id, result_obj.hit, result_obj.impact);
 			var data_obj = {};
 			if(result_obj.impact == 0){
 				data_obj.success = 1;
@@ -210,15 +211,6 @@ function App(){
 		var request_method = "POST";
 		// Callback function
 		function handler(result_obj) {
-			console.log(result_obj);
-			/*
-			var source = $("#core").html();  
-			var template = Handlebars.compile(source);
-			$('[module-id="shot"]').html(template({
-				load_module_shot : '1',
-				data_obj: result_obj
-			}));
-			*/
 			load_module_shot_result(result_obj.shot_id);
 		}
 		return ajax(href, params, request_method, handler);
