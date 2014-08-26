@@ -389,25 +389,25 @@ $app->post('/angles', function() use($app, $angleMapper){
  */
 $app->get('/shots', function() use($app, $shotMapper){
     try {
-        $shots = array();
+        $_toJson['shots'] = array();
         $shots_obj = $shotMapper->findAll();
         foreach ($shots_obj as $key => $value) {
-            $shots[$key]['id'] = $value->getId();
-            $shots[$key]['user']['id'] = $value->getUser()->getId();
-            $shots[$key]['user']['name'] = $value->getUser()->getName();
-            $shots[$key]['howitzer']['id'] = $value->getHowitzer()->getId();
-            $shots[$key]['howitzer']['weight'] = $value->getHowitzer()->getWeight();
-            $shots[$key]['target']['id'] = $value->getTarget()->getId();
-            $shots[$key]['target']['size'] = $value->getTarget()->getSize();
-            $shots[$key]['distance']['id'] = $value->getDistance()->getId();
-            $shots[$key]['distance']['distance'] = $value->getDistance()->getDistance();
-            $shots[$key]['speed']['id'] = $value->getSpeed()->getId();
-            $shots[$key]['speed']['speed'] = $value->getSpeed()->getSpeed();
-            $shots[$key]['angle']['id'] = $value->getAngle()->getId();
-            $shots[$key]['angle']['angle'] = $value->getAngle()->getAngle();
+            $_toJson[$key]['id'] = $value->getId();
+            $_toJson[$key]['user']['id'] = $value->getUser()->getId();
+            $_toJson[$key]['user']['name'] = $value->getUser()->getName();
+            $_toJson[$key]['howitzer']['id'] = $value->getHowitzer()->getId();
+            $_toJson[$key]['howitzer']['weight'] = $value->getHowitzer()->getWeight();
+            $_toJson[$key]['target']['id'] = $value->getTarget()->getId();
+            $_toJson[$key]['target']['size'] = $value->getTarget()->getSize();
+            $_toJson[$key]['distance']['id'] = $value->getDistance()->getId();
+            $_toJson[$key]['distance']['distance'] = $value->getDistance()->getDistance();
+            $_toJson[$key]['speed']['id'] = $value->getSpeed()->getId();
+            $_toJson[$key]['speed']['speed'] = $value->getSpeed()->getSpeed();
+            $_toJson[$key]['angle']['id'] = $value->getAngle()->getId();
+            $_toJson[$key]['angle']['angle'] = $value->getAngle()->getAngle();
         }
         $app->response()->header("Content-Type", "application/json");
-        echo '{"shot": ' . json_encode($shots) . '}';
+        echo json_encode($_toJson);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -418,23 +418,23 @@ $app->get('/shots', function() use($app, $shotMapper){
  */
 $app->get('/shots/:id', function($id) use($app, $shotMapper){
     try {
-        $shot = array();
+        $_toJson['shot'] = array();
         $shot_obj = $shotMapper->findById($id);
-        $shot['id'] = $shot_obj->getId();
-        $shot['user']['id'] = $shot_obj->getUser()->getId();
-        $shot['user']['name'] = $shot_obj->getUser()->getName();
-        $shot['howitzer']['id'] = $shot_obj->getHowitzer()->getId();
-        $shot['howitzer']['weight'] = $shot_obj->getHowitzer()->getWeight();
-        $shot['target']['id'] = $shot_obj->getTarget()->getId();
-        $shot['target']['size'] = $shot_obj->getTarget()->getSize();
-        $shot['distance']['id'] = $shot_obj->getDistance()->getId();
-        $shot['distance']['distance'] = $shot_obj->getDistance()->getDistance();
-        $shot['speed']['id'] = $shot_obj->getSpeed()->getId();
-        $shot['speed']['speed'] = $shot_obj->getSpeed()->getSpeed();
-        $shot['angle']['id'] = $shot_obj->getAngle()->getId();
-        $shot['angle']['angle'] = $shot_obj->getAngle()->getAngle();
+        $_toJson['id'] = $shot_obj->getId();
+        $_toJson['user']['id'] = $shot_obj->getUser()->getId();
+        $_toJson['user']['name'] = $shot_obj->getUser()->getName();
+        $_toJson['howitzer']['id'] = $shot_obj->getHowitzer()->getId();
+        $_toJson['howitzer']['weight'] = $shot_obj->getHowitzer()->getWeight();
+        $_toJson['target']['id'] = $shot_obj->getTarget()->getId();
+        $_toJson['target']['size'] = $shot_obj->getTarget()->getSize();
+        $_toJson['distance']['id'] = $shot_obj->getDistance()->getId();
+        $_toJson['distance']['distance'] = $shot_obj->getDistance()->getDistance();
+        $_toJson['speed']['id'] = $shot_obj->getSpeed()->getId();
+        $_toJson['speed']['speed'] = $shot_obj->getSpeed()->getSpeed();
+        $_toJson['angle']['id'] = $shot_obj->getAngle()->getId();
+        $_toJson['angle']['angle'] = $shot_obj->getAngle()->getAngle();
         $app->response()->header("Content-Type", "application/json");
-        echo '{"shot": ' . json_encode($shot) . '}';
+        echo json_encode($_toJson);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -472,27 +472,27 @@ $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetM
  */
 $app->get('/results', function() use($app, $resultMapper){
     try {
-        $results = array();
+        $_toJson['result'] = array();
         $results_obj = $resultMapper->findAll();
         foreach ($results_obj as $key => $value) {
-            $results[$key]['id'] = $value->getId();
-            $results[$key]['user']['id'] = $value->getUser()->getId();
-            $results[$key]['user']['name'] = $value->getUser()->getName();
-            $results[$key]['shot']['howitzer']['id'] = $value->getShot()->getHowitzer()->getId();
-            $results[$key]['shot']['howitzer']['name'] = $value->getShot()->getHowitzer()->getWeight();
-            $results[$key]['shot']['target']['id'] = $value->getShot()->getTarget()->getId();
-            $results[$key]['shot']['target']['size'] = $value->getShot()->getTarget()->getSize();
-            $results[$key]['shot']['distance']['id'] = $value->getShot()->getDistance()->getId();
-            $results[$key]['shot']['distance']['distance'] = $value->getShot()->getDistance()->getDistance();
-            $results[$key]['shot']['speed']['id'] = $value->getShot()->getSpeed()->getId();
-            $results[$key]['shot']['speed']['speed'] = $value->getShot()->getSpeed()->getSpeed();
-            $results[$key]['shot']['angle']['id'] = $value->getShot()->getAngle()->getId();
-            $results[$key]['shot']['angle']['angle'] = $value->getShot()->getAngle()->getAngle();
-            $results[$key]['hit'] = $value->getHit();
-            $results[$key]['impact'] =  $value->getImpact();
+            $_toJson[$key]['id'] = $value->getId();
+            $_toJson[$key]['user']['id'] = $value->getUser()->getId();
+            $_toJson[$key]['user']['name'] = $value->getUser()->getName();
+            $_toJson[$key]['shot']['howitzer']['id'] = $value->getShot()->getHowitzer()->getId();
+            $_toJson[$key]['shot']['howitzer']['name'] = $value->getShot()->getHowitzer()->getWeight();
+            $_toJson[$key]['shot']['target']['id'] = $value->getShot()->getTarget()->getId();
+            $_toJson[$key]['shot']['target']['size'] = $value->getShot()->getTarget()->getSize();
+            $_toJson[$key]['shot']['distance']['id'] = $value->getShot()->getDistance()->getId();
+            $_toJson[$key]['shot']['distance']['distance'] = $value->getShot()->getDistance()->getDistance();
+            $_toJson[$key]['shot']['speed']['id'] = $value->getShot()->getSpeed()->getId();
+            $_toJson[$key]['shot']['speed']['speed'] = $value->getShot()->getSpeed()->getSpeed();
+            $_toJson[$key]['shot']['angle']['id'] = $value->getShot()->getAngle()->getId();
+            $_toJson[$key]['shot']['angle']['angle'] = $value->getShot()->getAngle()->getAngle();
+            $_toJson[$key]['hit'] = $value->getHit();
+            $_toJson[$key]['impact'] =  $value->getImpact();
         }
         $app->response()->header("Content-Type", "application/json");
-        echo '{"result": ' . json_encode($results) . '}';
+        echo json_encode($_toJson);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -503,25 +503,25 @@ $app->get('/results', function() use($app, $resultMapper){
  */
 $app->get('/results/:id', function($id) use($app, $resultMapper){
     try {
-        $result = array();
+        $_toJson['result'] = array();
         $result_obj = $resultMapper->findById($id);
-        $result['id'] = $result_obj->getId();
-        $result['user']['id'] = $result_obj->getUser()->getId();
-        $result['user']['name'] = $result_obj->getUser()->getName();
-        $result['shot']['howitzer']['id'] = $result_obj->getShot()->getHowitzer()->getId();
-        $result['shot']['howitzer']['weight'] = $result_obj->getShot()->getHowitzer()->getWeight();
-        $result['shot']['target']['id'] = $result_obj->getShot()->getTarget()->getId();
-        $result['shot']['target']['size'] = $result_obj->getShot()->getTarget()->getSize();
-        $result['shot']['distance']['id'] = $result_obj->getShot()->getDistance()->getId();
-        $result['shot']['distance']['distance'] = $result_obj->getShot()->getDistance()->getDistance();
-        $result['shot']['speed']['id'] = $result_obj->getShot()->getSpeed()->getId();
-        $result['shot']['speed']['speed'] = $result_obj->getShot()->getSpeed()->getSpeed();
-        $result['shot']['angle']['id'] = $result_obj->getShot()->getAngle()->getId();
-        $result['shot']['angle']['angle'] = $result_obj->getShot()->getAngle()->getAngle();
-        $result['hit'] = $result_obj->getHit();
-        $result['impact'] =  $result_obj->getImpact();
+        $_toJson['id'] = $result_obj->getId();
+        $_toJson['user']['id'] = $result_obj->getUser()->getId();
+        $_toJson['user']['name'] = $result_obj->getUser()->getName();
+        $_toJson['shot']['howitzer']['id'] = $result_obj->getShot()->getHowitzer()->getId();
+        $_toJson['shot']['howitzer']['weight'] = $result_obj->getShot()->getHowitzer()->getWeight();
+        $_toJson['shot']['target']['id'] = $result_obj->getShot()->getTarget()->getId();
+        $_toJson['shot']['target']['size'] = $result_obj->getShot()->getTarget()->getSize();
+        $_toJson['shot']['distance']['id'] = $result_obj->getShot()->getDistance()->getId();
+        $_toJson['shot']['distance']['distance'] = $result_obj->getShot()->getDistance()->getDistance();
+        $_toJson['shot']['speed']['id'] = $result_obj->getShot()->getSpeed()->getId();
+        $_toJson['shot']['speed']['speed'] = $result_obj->getShot()->getSpeed()->getSpeed();
+        $_toJson['shot']['angle']['id'] = $result_obj->getShot()->getAngle()->getId();
+        $_toJson['shot']['angle']['angle'] = $result_obj->getShot()->getAngle()->getAngle();
+        $_toJson['hit'] = $result_obj->getHit();
+        $_toJson['impact'] =  $result_obj->getImpact();
         $app->response()->header("Content-Type", "application/json");
-        echo '{"result": ' . json_encode($result) . '}';
+        echo json_encode($_toJson);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -533,14 +533,14 @@ $app->get('/results/:id', function($id) use($app, $resultMapper){
 $app->post('/results', function() use($app, $userMapper, $shotMapper, $resultMapper){
     $params = json_decode($app->request()->getBody());
     try {
-        $user = $userMapper->findById($params->user_id);
-        $shot = $shotMapper->findById($params->shot_id);
-        $hit = $params->hit;
-        $impact = $params->impact;
-        $result_id = $resultMapper->insert($shot, $user, $hit, $impact);
-        $result = $resultMapper->findById($result_id);
+        $_toJson = array();
+        $user = $userMapper->findById($params->{'user_id'});
+        $shot = $shotMapper->findById($params->{'shot_id'});
+        $hit = $params->{'hit'};
+        $impact = $params->{'impact'};
+        $_toJson['result_id'] = $resultMapper->insert($shot, $user, $hit, $impact);
         $app->response()->header("Content-Type", "application/json");
-        echo '{"result": ' . json_encode($result) . '}';
+        echo json_encode($_toJson);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
