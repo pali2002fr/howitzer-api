@@ -640,7 +640,7 @@ $app->get('/shots-total-by-user/:id', function($id) use($app, $shotService){
 /*
  * Get calculate impact on target
  */
-$app->get('/calculate-trajectoire/:id', function($id) use($app, $shotMapper, $shotMapper){
+$app->get('/calculate-trajectoire/:id', function($id) use($app, $shotMapper, $shotService){
     try {
         $shot = $shotMapper->findById($id);
         $impact = $shotService->calculateTrajectoire($shot);
