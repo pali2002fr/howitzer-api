@@ -356,6 +356,8 @@ function App(){
 	});	
 
 	$(document).on('click', '#restart', function(event) {
+		$('[module-id="shot-result"]').html('');
+		load_module_shot();
 		load_module_shot_form();
 	});	
 }
