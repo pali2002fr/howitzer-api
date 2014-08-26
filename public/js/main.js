@@ -62,13 +62,14 @@ function App(){
 	}
 
 	function loadPage(){
-		load_module_shot_total_by_user();
 		load_module_shot_total();
 		load_module_user_total();
 		load_module_shot_avg_by_user();
 		load_module_best_shotters(topLimit);
 		load_module_shot();
 		load_module_shot_form();
+		var user_id = $('#user').val();
+		load_module_shot_total_by_user(user_id);
 	}
 
 	/******************************
@@ -76,9 +77,9 @@ function App(){
 	 ******************************/
 
 
-	function load_module_shot_total_by_user(){
+	function load_module_shot_total_by_user(user_id){
 		var href = apiUrl + "/users-total";
-		var params = "";
+		var params = {"id": user_id};
 		var request_method = "GET";
 		// Callback function
 		function handler(result_obj) {
@@ -113,7 +114,7 @@ function App(){
 				data_obj : data_obj
 			}));
 			//refresh page
-			load_module_shot_total_by_user();
+			load_module_shot_total_by_user(result_obj.user_id);
 			load_module_shot_total();
 			load_module_user_total();
 			load_module_shot_avg_by_user();
@@ -360,5 +361,11 @@ function App(){
 		load_module_shot();
 		load_module_shot_form();
 	});	
+
+	$(document).on('change', '#restart', function(event) {
+		$('[module-id="shot-result"]').html('');
+		load_module_shot();
+		load_module_shot_form();
+	});
 }
 
