@@ -445,7 +445,6 @@ $app->get('/shots/:id', function($id) use($app, $shotMapper){
  */
 $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetMapper, $distanceMapper, $speedMapper, $angleMapper, $shotMapper){
     $params = json_decode($app->request()->getBody());
-    error_log($params->{'user_id'},0);
     try {
         $user = $userMapper->findById($params->{'user_id'});
         $howitzer = $howitzerMapper->findById($params->{'howitzer_id'});
@@ -461,11 +460,8 @@ $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetM
                                     $speed, 
                                     $angle
                 );
-        
-        $shot = $shotMapper->findById($shot_id);
-        error_log(json_encode($shot), 0);
         $app->response()->header("Content-Type", "application/json");
-        echo '{"shot": ' . json_encode($shot) . '}';
+        echo '{"shot_id": ' . $shot_id . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
