@@ -87,7 +87,8 @@ function App(){
 			var template = Handlebars.compile(source);
 			$('[module-id="shot-total-by-user"]').html(template({
 				load_module_shot_total_by_user : '1',
-				data_obj : result_obj
+				data_obj : result_obj,
+				user_id : user_id
 			}));
 		}
 		return ajax(href, params, request_method, handler);
@@ -360,12 +361,11 @@ function App(){
 		$('[module-id="shot-result"]').html('');
 		load_module_shot();
 		load_module_shot_form();
+		$("#user").val($('[user_id]').val());
 	});	
 
-	$(document).on('change', '#restart', function(event) {
-		$('[module-id="shot-result"]').html('');
-		load_module_shot();
-		load_module_shot_form();
+	$(document).on('change', '#user', function(event) {
+		load_module_shot_total_by_user($(this).val());
 	});
 }
 

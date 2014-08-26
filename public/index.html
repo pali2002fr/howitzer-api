@@ -54,7 +54,7 @@
     <script id="core" type="text/x-handlebars-template">
       {{#if load_module_shot_total_by_user}}
       <h4>Total shots for this user</h4>
-      <p>
+      <p user-id="{{user_id}}">
         This user shots <span class="badge badge-important">{{data_obj.total}}</span> time(s).
       </p>
       {{/if}}
