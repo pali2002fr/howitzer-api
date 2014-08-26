@@ -78,7 +78,7 @@ function App(){
 
 
 	function load_module_shot_total_by_user(user_id){
-		var href = apiUrl + "/users-total";
+		var href = apiUrl + "/shots-total-by-user";
 		var params = {"id": user_id};
 		var request_method = "GET";
 		// Callback function
