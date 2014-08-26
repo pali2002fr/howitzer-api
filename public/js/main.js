@@ -205,6 +205,7 @@ function App(){
 		var request_method = "POST";
 		// Callback function
 		function handler(result_obj) {
+			console.log(result_obj);
 			/*
 			var source = $("#core").html();  
 			var template = Handlebars.compile(source);
@@ -213,7 +214,7 @@ function App(){
 				data_obj: result_obj
 			}));
 			*/
-			load_module_shot_result(result_obj.id);
+			//load_module_shot_result(result_obj.id);
 		}
 		return ajax(href, params, request_method, handler);
 	}
