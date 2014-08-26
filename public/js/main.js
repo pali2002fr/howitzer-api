@@ -37,7 +37,7 @@ function App(){
 						url : href,
 						type : type,
 						dataType : 'json',
-						data : JSON.stringify(params),
+						data : params,
 						headers : 	{
 										"cache-control" : "no-cache"
 									},
