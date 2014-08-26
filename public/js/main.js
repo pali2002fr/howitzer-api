@@ -69,6 +69,7 @@ function App(){
 		load_module_shot();
 		load_module_shot_form();
 		var user_id = $('#user').val();
+		console.log($('#user').val());
 		load_module_shot_total_by_user(user_id);
 	}
 
