@@ -68,9 +68,6 @@ function App(){
 		load_module_best_shotters(topLimit);
 		load_module_shot();
 		load_module_shot_form();
-		var user_id = $('#user').val();
-		console.log($('#user').val());
-		load_module_shot_total_by_user(user_id);
 	}
 
 	/******************************
@@ -240,6 +237,8 @@ function App(){
 			load_module_shot_form : '1'
 		}));
 		load_module_user();
+		var user_id = $('#user').val();
+		load_module_shot_total_by_user(user_id);
 		load_module_howitzer();
 		load_module_distance();
 		load_module_target();
