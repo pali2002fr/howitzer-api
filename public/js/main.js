@@ -13,6 +13,7 @@ function App(){
 	this.ajaxErrorHandler = ajaxErrorHandler;
 
 	var apiUrl = "http://ec2-54-164-182-11.compute-1.amazonaws.com";
+	var topLimit = 5;
 
 	/* Asynchronous */
 	function ajax(href, params, type, handler) {
@@ -62,11 +63,10 @@ function App(){
 
 	function loadPage(){
 		load_module_shot_total_by_user();
-		//load_module_shot_result();
 		load_module_shot_total();
 		load_module_user_total();
 		load_module_shot_avg_by_user();
-		load_module_best_shotters(5);
+		load_module_best_shotters(topLimit);
 		load_module_shot();
 		load_module_shot_form();
 	}
@@ -112,6 +112,12 @@ function App(){
 				load_module_shot_result : '1',
 				data_obj : data_obj
 			}));
+			//refresh page
+			load_module_shot_total_by_user();
+			load_module_shot_total();
+			load_module_user_total();
+			load_module_shot_avg_by_user();
+			load_module_best_shotters(topLimit);
 		}
 		return ajax(href, params, request_method, handler);
 	}	
@@ -347,6 +353,10 @@ function App(){
 		var angle_id = $('#angle').val();
 		add_shot(user_id, howitzer_id, target_id, distance_id, speed_id, angle_id);
 		$('[module-id="shot"]').html('');
+	});	
+
+	$(document).on('click', '#restart', function(event) {
+		load_module_shot_form();
 	});	
 }
 

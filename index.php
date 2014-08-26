@@ -599,7 +599,7 @@ $app->get('/shots-avg', function() use($app, $shotMapper, $userMapper){
     try {
         $avg = count($shotMapper->findAll())/count($userMapper->findAll());
         $app->response()->header("Content-Type", "application/json");
-        echo '{"avg": ' . json_encode($avg) . '}';
+        echo '{"avg": ' . json_encode(number_format($avg, 2)) . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
