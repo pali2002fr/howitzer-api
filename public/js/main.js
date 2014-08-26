@@ -31,6 +31,7 @@ function App(){
 		    	$.each(params, function( key, value ) {
 				  href = href +  "/" + value;
 				});
+				params = '';
 		    } else if(type == 'POST'){
 		    	params = JSON.stringify(params);
 		    }
