@@ -463,7 +463,7 @@ $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetM
                 );
         
         $shot = $shotMapper->findById($shot_id);
-        error_log($shot->getId(), 0);
+        error_log(json_encode($shot), 0);
         $app->response()->header("Content-Type", "application/json");
         echo '{"shot": ' . json_encode($shot) . '}';
     } catch(PDOException $e) {
