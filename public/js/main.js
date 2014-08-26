@@ -26,12 +26,15 @@ function App(){
     	}    	
     	*/
 
-    	if(params != null && type == 'GET'){
-	    	$.each(params, function( key, value ) {
-			  href = href +  "/" + value;
-			});
-			params = '';
-	    }
+    	if(params != null){
+    		if(type == 'GET'){
+		    	$.each(params, function( key, value ) {
+				  href = href +  "/" + value;
+				});
+		    } else if(type == 'POST'){
+		    	params = JSON.stringify(params);
+		    }
+    	} 
 		
 		return $.ajax({
 						url : href,
