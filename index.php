@@ -445,13 +445,14 @@ $app->get('/shots/:id', function($id) use($app, $shotMapper){
  */
 $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetMapper, $distanceMapper, $speedMapper, $angleMapper, $shotMapper){
     $params = json_decode($app->request()->getBody());
+    error_log($params->{'user_id'},0);
     try {
-        $user = $userMapper->findById($params->user_id);
-        $howitzer = $howitzerMapper->findById($params->howitzer_id);
-        $target = $targetMapper->findById($params->target_id);
-        $distance = $distanceMapper->findById($params->distance_id);
-        $speed = $speedMapper->findById($params->speed_id);
-        $angle = $angleMapper->findById($params->angle_id);
+        $user = $userMapper->findById($params->{'user_id'});
+        $howitzer = $howitzerMapper->findById($params->{'howitzer_id'});
+        $target = $targetMapper->findById($params->{'target_id'});
+        $distance = $distanceMapper->findById($params->{'distance_id'});
+        $speed = $speedMapper->findById($params->{'speed_id'});
+        $angle = $angleMapper->findById($params->{'angle_id'});
         $shot_id = $shotMapper->insert( 
                                     $user, 
                                     $howitzer, 
@@ -460,6 +461,7 @@ $app->post('/shots', function() use($app, $userMapper, $howitzerMapper, $targetM
                                     $speed, 
                                     $angle
                 );
+        error_log($shot_id, 0);
         $shot = $shotMapper->findById($shot_id);
         $app->response()->header("Content-Type", "application/json");
         echo '{"shot": ' . json_encode($shot) . '}';
