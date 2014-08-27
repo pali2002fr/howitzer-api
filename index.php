@@ -121,13 +121,12 @@ $app->get('/users/:id', function($id) use($app, $userMapper){
  * Create new user
  */
 $app->post('/users', function() use($app, $userMapper){
-    $params = $app->request()->post();
+    $params = json_decode($app->request()->getBody());
     try {
-        $user = new \Model\User($params->user_id);
+        $user = new User($params->{'user_name'});
         $user_id = $userMapper->insert( $user );
-        $user = $userMapper->findById($user_id);
         $app->response()->header("Content-Type", "application/json");
-        echo '{"user": ' . json_encode($user) . '}';
+        echo '{"user_id": ' . $user_id . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -171,13 +170,12 @@ $app->get('/howitzers/:id', function($id) use($app, $howitzerMapper){
  * Create new howitzer
  */
 $app->post('/howitzers', function() use($app, $howitzerMapper){
-    $params = $app->request()->post();
+    $params = json_decode($app->request()->getBody());
     try {
-        $howitzer = new \Model\Howitzer($params->howitzer_weight);
-        $distance_id = $howitzerMapper->insert( $howitzer );
-        $howitzer = $howitzerMapper->findById($howitzer_id);
+        $howitzer = new Howitzer($params->{'howitzer_weight'});
+        $howitzer_id = $howitzerMapper->insert( $howitzer );
         $app->response()->header("Content-Type", "application/json");
-        echo '{"howitzer": ' . json_encode($howitzer) . '}';
+        echo '{"howitzer_id": ' . $howitzer_id . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -221,13 +219,12 @@ $app->get('/distances/:id', function($id) use($app, $distanceMapper){
  * Create new distance
  */
 $app->post('/distances', function() use($app, $distanceMapper){
-    $params = $app->request()->post();
+    $params = json_decode($app->request()->getBody());
     try {
-        $distance = new \Model\Distance($params->distance_value);
+        $distance = new Distance($params->{'distance_value'});
         $distance_id = $distanceMapper->insert( $distance );
-        $distance = $distanceMapper->findById($distance_id);
         $app->response()->header("Content-Type", "application/json");
-        echo '{"distance": ' . json_encode($distance) . '}';
+        echo '{"distance": ' . $distance_id . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -271,13 +268,12 @@ $app->get('/targets/:id', function($id) use($app, $targetMapper){
  * Create new target
  */
 $app->post('/targets', function() use($app, $targetMapper){
-    $params = $app->request()->post();
+    $params = json_decode($app->request()->getBody());
     try {
-        $target = new \Model\Target($params->target_size);
+        $target = new Target($params->{'target_size'});
         $target_id = $targetMapper->insert( $target );
-        $target = $targetMapper->findById($target_id);
         $app->response()->header("Content-Type", "application/json");
-        echo '{"target": ' . json_encode($target) . '}';
+        echo '{"target": ' . $target_id . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -321,13 +317,12 @@ $app->get('/speeds/:id', function($id) use($app, $speedMapper){
  * Create new speed
  */
 $app->post('/speed', function() use($app, $speedMapper){
-    $params = $app->request()->post();
+    $params = json_decode($app->request()->getBody());
     try {
-        $speed = new \Model\Speed($params->speed_value);
+        $speed = new Speed($params->{'speed_value'});
         $speed_id = $speedMapper->insert( $speed );
-        $speed = $speedMapper->findById($speed_id);
         $app->response()->header("Content-Type", "application/json");
-        echo '{"speed": ' . json_encode($speed) . '}';
+        echo '{"speed": ' . $speed_id . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
@@ -372,13 +367,12 @@ $app->get('/angles/:id', function($id) use($app, $angleMapper){
  * Create new angle
  */
 $app->post('/angles', function() use($app, $angleMapper){
-    $params = $app->request()->post();
+    $params = json_decode($app->request()->getBody());
     try {
-        $angle = new \Model\Angle($params->angle_value);
+        $angle = new Angle($params->{'angle_value'});
         $angle_id = $angleMapper->insert( $angle );
-        $angle = $angleMapper->findById($angle_id);
         $app->response()->header("Content-Type", "application/json");
-        echo '{"angle": ' . json_encode($angle) . '}';
+        echo '{"angle": ' . $angle_id . '}';
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }

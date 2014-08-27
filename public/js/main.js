@@ -13,6 +13,7 @@ function App(){
 	this.ajaxErrorHandler = ajaxErrorHandler;
 
 	var apiUrl = "http://ec2-54-164-182-11.compute-1.amazonaws.com";
+	//var apiUrl = "http://localhost:8888/Howitzer/api";
 	var topLimit = 5;
 
 	/* Asynchronous */

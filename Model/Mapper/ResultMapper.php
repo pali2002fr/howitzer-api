@@ -28,7 +28,8 @@ class ResultMapper extends AbstractDataMapper implements ResultMapperInterface {
 				'id_shot' => $shot->getId(),
 				'id_user' => $user->getId(),
 				'hit' => $hit,
-				'impact' => $impact
+				'impact' => $impact,
+				'created_date' => date("Y-m-d H:i:s")
 			)
 		);
 	}

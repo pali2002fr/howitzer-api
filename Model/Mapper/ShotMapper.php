@@ -55,7 +55,8 @@ class ShotMapper extends AbstractDataMapper implements ShotMapperInterface {
 				'id_target' => $target->id,
 				'id_distance' => $distance->id,
 				'id_speed' => $speed->id,
-				'id_angle' => $angle->id
+				'id_angle' => $angle->id,
+				'created_date' => date("Y-m-d H:i:s")
 			)
 		);
 	}

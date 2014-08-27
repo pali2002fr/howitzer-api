@@ -11,7 +11,8 @@ class DistanceMapper extends AbstractDataMapper implements DistanceMapperInterfa
 		$distance->id = $this->adapter->insert(
 			$this->entityTable,
 			array(
-				'distance' => $distance->distance
+				'distance' => $distance->distance,
+				'created_date' => date("Y-m-d H:i:s")
 			)
 		);
 		return $distance->id;

@@ -11,7 +11,8 @@ class TargetMapper extends AbstractDataMapper implements TargetMapperInterface {
 		$target->id = $this->adapter->insert(
 			$this->entityTable,
 			array(
-				'size' => $target->size
+				'size' => $target->size,
+				'created_date' => date("Y-m-d H:i:s")
 			)
 		);
 		return $target->id;

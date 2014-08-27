@@ -11,7 +11,8 @@ class HowitzerMapper extends AbstractDataMapper implements HowitzerMapperInterfa
 		$howitzer->id = $this->adapter->insert(
 			$this->entityTable,
 			array(
-				'weight' => $howitzer->weight
+				'weight' => $howitzer->weight,
+				'created_date' => date("Y-m-d H:i:s")
 			)
 		);
 		return $howitzer->id;

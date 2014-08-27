@@ -11,7 +11,8 @@ class SpeedMapper extends AbstractDataMapper implements SpeedMapperInterface {
 		$speed->id = $this->adapter->insert(
 			$this->entityTable,
 			array(
-				'speed' => $speed->speed
+				'speed' => $speed->speed,
+				'created_date' => date("Y-m-d H:i:s")
 			)
 		);
 		return $speed->id;

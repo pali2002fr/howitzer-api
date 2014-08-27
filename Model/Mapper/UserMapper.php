@@ -11,7 +11,8 @@ class UserMapper extends AbstractDataMapper implements UserMapperInterface {
 		$user->id = $this->adapter->insert(
 			$this->entityTable,
 			array(
-				'name' => $user->name
+				'name' => $user->name,
+				'created_date' => date("Y-m-d H:i:s")
 			)
 		);
 		return $user->id;

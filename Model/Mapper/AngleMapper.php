@@ -11,7 +11,8 @@ class AngleMapper extends AbstractDataMapper implements AngleMapperInterface {
 		$angle->id = $this->adapter->insert(
 			$this->entityTable,
 			array(
-				'angle' => $angle->angle
+				'angle' => $angle->angle,
+				'created_date' => date("Y-m-d H:i:s")
 			)
 		);
 		return $angle->id;
