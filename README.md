@@ -1,15 +1,15 @@
 Here is a Howitzer Game application as my sample code.<br>
-How it works : You pick a user, weight of howitzer, distance of target, size of the target, speed, angle of shot and you fire.
+**How it works** : You pick a user, weight of howitzer, distance of target, size of the target, speed, angle of shot and you fire.
 The results are saved in the database and a stats are processed against that.
 
 **Demo:** http://ec2-52-90-251-194.compute-1.amazonaws.com/public/
 
 **Technology**
 * Linux(Amazon Web Services Cloud) : Ubuntu 12
-* **Apache : Apache
-* **Mysql : version 5.5
-* **PHP : PHP 5 & Framework Slim
-* **HTML / CSS : Bootstrap Library
+* Apache : Apache
+* Mysql : version 5.5
+* PHP : PHP 5 & Framework Slim
+* HTML / CSS : Bootstrap Library
 * Javascrpit : Straight Javascrpit, Jquery, Handlebars
 
 ***API DOC:***
