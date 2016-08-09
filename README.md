@@ -4,7 +4,8 @@ The results are saved in the database and a stats are processed against that.
 
 Demo: http://ec2-52-90-251-194.compute-1.amazonaws.com/public/
 
-API DOC:
+***API DOC:***
+----
 
 **Show Multiple user**
 ----
