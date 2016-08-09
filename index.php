@@ -206,8 +206,8 @@ $app->get('/distances/:id', function($id) use($app, $distanceMapper){
     try {
         $distance = array();
         $distance_obj = $distanceMapper->findById($id);
-        $distance['id'] = $value->getId();
-        $distance['distance'] = $value->getDistance();
+        $distance['id'] = $distance_obj->getId();
+        $distance['distance'] = $distance_obj->getDistance();
         $app->response()->header("Content-Type", "application/json");
         echo '{"distance": ' . json_encode($distance) . '}';
     } catch(PDOException $e) {
@@ -255,8 +255,8 @@ $app->get('/targets/:id', function($id) use($app, $targetMapper){
     try {
         $target = array();
         $target_obj = $targetMapper->findById($id);
-        $target['id'] = $value->getId();
-        $target['size'] = $value->getSize();
+        $target['id'] = $target_obj->getId();
+        $target['size'] = $target_obj->getSize();
         $app->response()->header("Content-Type", "application/json");
         echo '{"target": ' . json_encode($target) . '}';
     } catch(PDOException $e) {
@@ -304,8 +304,8 @@ $app->get('/speeds/:id', function($id) use($app, $speedMapper){
     try {
         $speed = array();
         $speed_obj = $speedMapper->findById($id);
-        $speed['id'] = $value->getId();
-        $speed['speed'] = $value->getSpeed();
+        $speed['id'] = $speed_obj->getId();
+        $speed['speed'] = $speed_obj->getSpeed();
         $app->response()->header("Content-Type", "application/json");
         echo '{"speed": ' . json_encode($speed) . '}';
     } catch(PDOException $e) {
@@ -353,8 +353,8 @@ $app->get('/angles/:id', function($id) use($app, $angleMapper){
     try {
         $angle = array();
         $angle_obj = $angleMapper->findById($id);
-        $angle['id'] = $value->getId();
-        $angle['angle'] = $value->getAngle();
+        $angle['id'] = $angle_obj->getId();
+        $angle['angle'] = $angle_obj->getAngle();
         $app->response()->header("Content-Type", "application/json");
         echo '{"angle": ' . json_encode($angle) . '}';
 
