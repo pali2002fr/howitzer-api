@@ -100,7 +100,6 @@ function App(){
 		var request_method = "GET";
 		// Callback function
 		function handler(result_obj) {
-			console.log(result_obj);
 			add_result(result_obj.user_id, result_obj.shot_id, result_obj.hit, result_obj.impact);
 			var data_obj = {};
 			if(result_obj.impact == 0){
@@ -200,7 +199,6 @@ function App(){
 		var request_method = "POST";
 		// Callback function
 		function handler(result_obj) {
-			console.log(result_obj);
 		}
 		return ajax(href, params, request_method, handler);
 	}

@@ -38,7 +38,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"user": [{"id":"1","name":"user_1"},{"id":"2","name":"user_2"}]}`
+    **Content:** `{"users": [{"id":"1","name":"user_1"},{"id":"2","name":"user_2"}]}`
 
 
 **Show Single User**
@@ -89,7 +89,7 @@ The results are saved in the database and a stats are processed against that.
 
     **Required:**
  
-   `name=[alpha numeric]`
+   `name=[alphanumeric]`
 
 * **Success Response:**
 
@@ -120,7 +120,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"howitzer": [{"id":"1","weight":"1000"},{"id":"2","weight":"2000"}]}`
+    **Content:** `{"howitzers": [{"id":"1","weight":"1000"},{"id":"2","weight":"2000"}]}`
 
 
 
@@ -173,7 +173,7 @@ The results are saved in the database and a stats are processed against that.
 
   **Required:**
  
-   `id=[alphanumeric]`
+   `weight=[integer]`
 
 * **Success Response:**
 
@@ -205,7 +205,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"distance": [{"id":"1","distance":"100"},{"id":"2","distance":"200"}]}`
+    **Content:** `{"distances": [{"id":"1","distance":"100"},{"id":"2","distance":"200"}]}`
 
 
 
@@ -234,7 +234,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"howitzer": {id: 14, distance: 1000}}`
+    **Content:** `{"distance": {id: 14, distance: 1000}}`
  
 
 **Create Distance**
@@ -289,7 +289,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"target": [{"id":"1","size":"10"},{"id":"2","size":"20"}]}`
+    **Content:** `{"targets": [{"id":"1","size":"10"},{"id":"2","size":"20"}]}`
  
 
 
@@ -373,7 +373,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"target": [{"id":"1","speed":"15"},{"id":"2","speed":"25"}]}`
+    **Content:** `{"speeds": [{"id":"1","speed":"15"},{"id":"2","speed":"25"}]}`
  
 
 
@@ -458,7 +458,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"angle": [{"id":"1","angle":"15"},{"id":"2","angle":"25"}]}`
+    **Content:** `{"angles": [{"id":"1","angle":"15"},{"id":"2","angle":"25"}]}`
 
 
 
@@ -543,7 +543,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"shot": [{"id":"1","user":{"id":"1","name":"user_1"},"howitzer":{"id":"1","weight":"1000"},"target":{"id":"1","size":"10"},"distance":{"id":"1","distance":"100"},"speed":{"id":"1","speed":"5"},"angle":{"id":"1","angle":"5"}},{"id":"21","user":{"id":"1","name":"user_1"},"howitzer":{"id":"1","weight":"1000"},"target":{"id":"1","size":"10"},"distance":{"id":"1","distance":"100"},"speed":{"id":"1","speed":"5"},"angle":{"id":"5","angle":"25"}}]}`
+    **Content:** `{"shots": [{"id":"1","user":{"id":"1","name":"user_1"},"howitzer":{"id":"1","weight":"1000"},"target":{"id":"1","size":"10"},"distance":{"id":"1","distance":"100"},"speed":{"id":"1","speed":"5"},"angle":{"id":"1","angle":"5"}},{"id":"21","user":{"id":"1","name":"user_1"},"howitzer":{"id":"1","weight":"1000"},"target":{"id":"1","size":"10"},"distance":{"id":"1","distance":"100"},"speed":{"id":"1","speed":"5"},"angle":{"id":"5","angle":"25"}}]}`
  
 
 
@@ -632,7 +632,7 @@ The results are saved in the database and a stats are processed against that.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{"shot": [{"id":"1","user":{"id":"1","name":"user_1"},"shot":{"howitzer":{"id":"1","name":"1000"},"target":{"id":"1","size":"10"},"distance":{"id":"1","distance":"100"},"speed":{"id":"1","speed":"5"},"angle":{"id":"1","angle":"5"}},"hit":"1","impact":"0"},{"id":"2","user":{"id":"1","name":"user_1"},"shot":{"howitzer":{"id":"1","name":"1000"},"target":{"id":"1","size":"10"},"distance":{"id":"1","distance":"100"},"speed":{"id":"1","speed":"5"},"angle":{"id":"1","angle":"5"}},"hit":"1","impact":"0"}]}`
+    **Content:** `{"results": [{"id":"1","user":{"id":"1","name":"user_1"},"howitzer":{"id":"1","weight":"1000"},"target":{"id":"1","size":"10"},"distance":{"id":"1","distance":"100"},"speed":{"id":"1","speed":"5"},"angle":{"id":"1","angle":"5"}},{"id":"21","user":{"id":"1","name":"user_1"},"howitzer":{"id":"1","weight":"1000"},"target":{"id":"1","size":"10"},"distance":{"id":"1","distance":"100"},"speed":{"id":"1","speed":"5"},"angle":{"id":"5","angle":"25"}}]}`
 
 
 

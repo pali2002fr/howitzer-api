@@ -77,7 +77,7 @@
       {{#if load_module_user}}
       <label class="control-label" for="user">User :</label>
       <select id="user">
-        {{#each data_obj.user}}
+        {{#each data_obj.users}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}
       </select>
@@ -86,7 +86,7 @@
       {{#if load_module_howitzer}}
       <label class="control-label" for="howitzer">Weight of Howitzer :</label>
       <select id="howitzer">
-        {{#each data_obj.howitzer}}
+        {{#each data_obj.howitzers}}
         <option value="{{id}}">{{weight}}</option>
         {{/each}}
       </select>
@@ -95,7 +95,7 @@
       {{#if load_module_distance}}
       <label class="control-label" for="distance">Distance to the target :</label>
       <select id="distance">
-        {{#each data_obj.distance}}
+        {{#each data_obj.distances}}
         <option value="{{id}}">{{distance}}</option>
         {{/each}}
       </select>
@@ -104,7 +104,7 @@
       {{#if load_module_target}}
       <label class="control-label" for="target">Size of the target :</label>
       <select id="target">
-        {{#each data_obj.target}}
+        {{#each data_obj.targets}}
         <option value="{{id}}">{{size}}</option>
         {{/each}}
       </select>
@@ -113,7 +113,7 @@
       {{#if load_module_speed}}
       <label class="control-label" for="speed">Muzzle Speed :</label>
       <select id="speed" module-id="speed">
-        {{#each data_obj.speed}}
+        {{#each data_obj.speeds}}
         <option value="{{id}}">{{speed}}</option>
         {{/each}}
       </select>
@@ -122,7 +122,7 @@
       {{#if load_module_angle}}
       <label class="control-label" for="angle">Angle of Shot :</label>
       <select id="angle" module-id="angle">
-        {{#each data_obj.angle}}
+        {{#each data_obj.angles}}
         <option value="{{id}}">{{angle}}</option>
         {{/each}}
         <option>5</option>
