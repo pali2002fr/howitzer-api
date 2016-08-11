@@ -12,8 +12,8 @@ function App(){
 	this.ajax = ajax;
 	this.ajaxErrorHandler = ajaxErrorHandler;
 
-	var apiUrl = "http://ec2-52-90-251-194.compute-1.amazonaws.com";
-	//var apiUrl = "http://localhost:8888/howitzer-api";
+	//var apiUrl = "http://ec2-52-90-251-194.compute-1.amazonaws.com";
+	var apiUrl = "http://localhost:8888/howitzer-api";
 	var topLimit = 5;
 
 	/* Asynchronous */
@@ -352,6 +352,7 @@ function App(){
 		var speed_id = $('#speed').val();
 		var angle_id = $('#angle').val();
 		add_shot(user_id, howitzer_id, target_id, distance_id, speed_id, angle_id);
+		load_module_best_shotters(topLimit);
 		$('[module-id="shot"]').html('');
 	});	
 
